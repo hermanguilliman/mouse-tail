@@ -3,6 +3,7 @@ from ctypes import windll, Structure, c_long, byref
 import configparser
 from dataclasses import dataclass
 
+
 @dataclass
 class Settings:
     width: int
@@ -15,17 +16,18 @@ class Settings:
     root_transparent: float
 
 
-def load_config(path: str):
+def load_config(path: str) -> Settings:
     config = configparser.ConfigParser()
     config.read(path)
     config = Settings(**config['settings'])
     return config
 
+
 class POINT(Structure):
     _fields_ = [("x", c_long), ("y", c_long)]
 
 
-def queryMousePosition():
+def queryMousePosition() -> tuple:
     pt = POINT()
     windll.user32.GetCursorPos(byref(pt))
     return pt.x, pt.y
@@ -45,7 +47,7 @@ def main():
     label = Label(root, background='#FF00FF', foreground=config.font_color, font=(config.font_family, config.font_size, config.font_weight), justify="left")
     label.pack(fill="both", expand=True)
     
-    def update():
+    def update() -> None:
         mouse_x, mouse_y = queryMousePosition()
         label['text'] = f'x:{mouse_x} y:{mouse_y}'
         root.geometry(f'{config.width}x{config.height}+{mouse_x+5}+{mouse_y+5}')
