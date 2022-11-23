@@ -41,10 +41,18 @@ def main():
     root.wm_attributes("-disabled", True)
     root.wm_attributes("-transparentcolor", "#FF00FF")
     root.wm_attributes("-alpha", config.root_transparent)
-    root.configure(width=config.width, height=config.height, background="#FF00FF")    
+    root.configure(width=config.width,
+                   height=config.height,
+                   background="#FF00FF")
     root.geometry(f"{config.width}x{config.height}")
     
-    label = Label(root, background='#FF00FF', foreground=config.font_color, font=(config.font_family, config.font_size, config.font_weight), justify="left")
+    label = Label(root,
+                  background='#FF00FF',
+                  foreground=config.font_color,
+                  font=(config.font_family,
+                        config.font_size,
+                        config.font_weight),
+                  justify="left")
     label.pack(fill="both", expand=True)
     
     def update() -> None:
